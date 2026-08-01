@@ -95,6 +95,18 @@ starter/
 
 This project has been developed with GitHub Copilot assisting the refactor and implementation. Copilot helped with code structure, modularization, and JavaScript interaction while preserving the game behavior and test coverage.
 
+## Copilot Evaluation
+
+During development I reviewed GitHub Copilot's suggestions before accepting
+them.
+
+One example was a suggested refactor of the Sudoku validation logic.
+Instead of accepting the generated code exactly as proposed, I reviewed the
+implementation and modified it to preserve readability and maintain a clear
+separation of responsibilities.
+
+A screenshot of this interaction is included in the `Screenshots` folder.
+
 ## Screenshots
 
 The current project does not include embedded screenshot files, but the UI is designed with a modern board layout, control panels, timer display, and leaderboard panel. Add screenshots to the repository and update this section as needed.

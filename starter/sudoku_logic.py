@@ -1,3 +1,15 @@
+"""
+Copilot Evaluation
+
+GitHub Copilot suggested consolidating the Sudoku validation and solving
+logic into fewer functions. After reviewing the suggestion, I modified the
+implementation instead of accepting it unchanged.
+
+I retained a modular design by exposing small wrapper functions that delegate
+to the SudokuGame class. This keeps the public API compatible with the Flask
+application while improving readability, maintainability, and testability.
+"""
+
 from sudoku_app.game.logic import Board, EMPTY, SIZE, SudokuGame
 
 _game = SudokuGame()
@@ -36,3 +48,4 @@ def count_solutions(board: Board, limit: int = 2) -> int:
 def generate_puzzle(clues: int = 35) -> tuple[Board, Board]:
     """Generate a new puzzle and its full solution."""
     return _game.generate_puzzle(clues)
+

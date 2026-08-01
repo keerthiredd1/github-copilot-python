@@ -25,14 +25,23 @@ def index():
 @bp.route('/new')
 def new_game():
     """Generate a new puzzle and return it as JSON."""
-    clues = _parse_clues(request.args.get('clues', '35'))
-    if clues is None:
-        return jsonify({'error': 'Invalid clues value'}), 400
-    game_service = current_app.extensions['game_service']
+
+    difficulty = request.args.get("difficulty", "medium")
+
+    clue_map = {
+        "easy": 42,
+        "medium": 34,
+        "hard": 28
+    }
+
+    clues = clue_map.get(difficulty, 34)
+
+    game_service = current_app.extensions["game_service"]
     game_service.generate_puzzle(clues)
+
     return jsonify({
-        'puzzle': game_service.current['puzzle'],
-        'solution': game_service.current['solution'],
+        "puzzle": game_service.current["puzzle"],
+        "solution": game_service.current["solution"]
     })
 
 
@@ -58,7 +67,31 @@ def check_solution():
             if board[i][j] != solution[i][j]:
                 incorrect.append([i, j])
     return jsonify({'incorrect': incorrect})
+@bp.route('/hint', methods=['POST'])
+def get_hint():
+    """Return one correct value for an empty cell."""
 
+    game_service = current_app.extensions["game_service"]
+
+    puzzle = game_service.current.get("puzzle")
+    solution = game_service.current.get("solution")
+
+    if puzzle is None or solution is None:
+        return jsonify({"error": "No game in progress"}), 400
+
+    for row in range(9):
+        for col in range(9):
+            if puzzle[row][col] == 0:
+                value = solution[row][col]
+                puzzle[row][col] = value
+
+                return jsonify({
+                    "row": row,
+                    "col": col,
+                    "value": value
+                })
+
+    return jsonify({"error": "No hints available"}), 400
 
 def register_routes(app):
     app.register_blueprint(bp)

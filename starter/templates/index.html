@@ -16,7 +16,7 @@
     <aside class="control-panel left-panel">
       <div class="panel-header">Difficulty</div>
       <label class="field-label" for="difficulty-select">Difficulty</label>
-      <select id="difficulty-select" class="select-control">
+      <select id="difficulty" class="select-control">
         <option value="easy">Easy</option>
         <option value="medium">Medium</option>
         <option value="hard">Hard</option>
@@ -37,7 +37,7 @@
 
     <aside class="control-panel right-panel">
       <button id="check-solution" class="primary-button">Check</button>
-      <button id="use-hint" class="secondary-button" type="button">Hint</button>
+      <button id="hint-button" class="secondary-button" type="button">Hint</button>
     </aside>
   </main>
 
@@ -45,10 +45,7 @@
     <div class="leaderboard-header">
       <h2>Top 10 Fastest Times</h2>
     </div>
-    <form id="leaderboard-form" class="leaderboard-form">
-      <input id="player-name" type="text" maxlength="20" placeholder="Your name" required>
-      <button type="submit" class="primary-button">Save Time</button>
-    </form>
+    
     <div class="leaderboard-table-wrap">
       <table class="leaderboard-table">
         <thead>
