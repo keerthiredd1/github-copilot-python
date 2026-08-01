@@ -1,57 +1,38 @@
-import copy
-import random
+from sudoku_app.game.logic import Board, EMPTY, SIZE, SudokuGame
 
-SIZE = 9
-EMPTY = 0
+_game = SudokuGame()
 
-def deep_copy(board):
-    return copy.deepcopy(board)
 
-def create_empty_board():
-    return [[EMPTY for _ in range(SIZE)] for _ in range(SIZE)]
+def deep_copy(board: Board) -> Board:
+    """Return a deep copy of the given board."""
+    return _game.deep_copy(board)
 
-def is_safe(board, row, col, num):
-    # Check row and column
-    for x in range(SIZE):
-        if board[row][x] == num or board[x][col] == num:
-            return False
-    # Check 3x3 box
-    start_row = row - row % 3
-    start_col = col - col % 3
-    for i in range(3):
-        for j in range(3):
-            if board[start_row + i][start_col + j] == num:
-                return False
-    return True
 
-def fill_board(board):
-    for row in range(SIZE):
-        for col in range(SIZE):
-            if board[row][col] == EMPTY:
-                possible = list(range(1, SIZE + 1))
-                random.shuffle(possible)
-                for candidate in possible:
-                    if is_safe(board, row, col, candidate):
-                        board[row][col] = candidate
-                        if fill_board(board):
-                            return True
-                        board[row][col] = EMPTY
-                return False
-    return True
+def create_empty_board() -> Board:
+    """Return an empty 9x9 Sudoku board."""
+    return _game.create_empty_board()
 
-def remove_cells(board, clues):
-    attempts = SIZE * SIZE - clues
-    while attempts > 0:
-        row = random.randrange(SIZE)
-        col = random.randrange(SIZE)
-        if board[row][col] != EMPTY:
-            board[row][col] = EMPTY
-            attempts -= 1
 
-def generate_puzzle(clues=35):
-    board = create_empty_board()
-    fill_board(board)
-    solution = deep_copy(board)
-    remove_cells(board, clues)
-    puzzle = deep_copy(board)
-    return puzzle, solution
+def is_safe(board: Board, row: int, col: int, num: int) -> bool:
+    """Return True if num is safe to place at the given cell."""
+    return _game.is_safe(board, row, col, num)
+
+
+def fill_board(board: Board) -> bool:
+    """Fill the board with a completed Sudoku solution."""
+    return _game.fill_board(board)
+
+
+def remove_cells(board: Board, clues: int) -> None:
+    """Remove cells from the board leaving the desired number of clues."""
+    return _game.remove_cells(board, clues)
+
+
+def count_solutions(board: Board, limit: int = 2) -> int:
+    """Count the number of solutions for a board, stopping at the limit."""
+    return _game.count_solutions(board, limit=limit)
+
+
+def generate_puzzle(clues: int = 35) -> tuple[Board, Board]:
+    """Generate a new puzzle and its full solution."""
+    return _game.generate_puzzle(clues)

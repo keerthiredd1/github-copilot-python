@@ -2,17 +2,69 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sudoku Game</title>
   <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-  <h1>Sudoku Game</h1>
-  <div id="sudoku-board"></div>
-  <div class="controls">
-    <button id="new-game">New Game</button>
-    <button id="check-solution">Check Solution</button>
-    <span id="message"></span>
+  <div class="top-bar">
+    <h1>Sudoku</h1>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false">Light / Dark</button>
   </div>
+
+  <main class="game-grid">
+    <aside class="control-panel left-panel">
+      <div class="panel-header">Difficulty</div>
+      <label class="field-label" for="difficulty-select">Difficulty</label>
+      <select id="difficulty-select" class="select-control">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+      <button id="new-game" class="primary-button">New Game</button>
+    </aside>
+
+    <section class="board-section">
+      <div class="board-header">
+        <div class="timer-box">
+          <span class="timer-label">Time</span>
+          <span id="timer" class="timer">00:00</span>
+        </div>
+        <div id="message" class="status-message"></div>
+      </div>
+      <div id="sudoku-board" class="sudoku-board"></div>
+    </section>
+
+    <aside class="control-panel right-panel">
+      <button id="check-solution" class="primary-button">Check</button>
+      <button id="use-hint" class="secondary-button" type="button">Hint</button>
+    </aside>
+  </main>
+
+  <section class="leaderboard-panel">
+    <div class="leaderboard-header">
+      <h2>Top 10 Fastest Times</h2>
+    </div>
+    <form id="leaderboard-form" class="leaderboard-form">
+      <input id="player-name" type="text" maxlength="20" placeholder="Your name" required>
+      <button type="submit" class="primary-button">Save Time</button>
+    </form>
+    <div class="leaderboard-table-wrap">
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Time</th>
+            <th>Level</th>
+            <th>Hints</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboard-body"></tbody>
+      </table>
+    </div>
+  </section>
+
   <script src="/static/main.js"></script>
 </body>
 </html>
